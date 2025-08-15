@@ -1,3 +1,7 @@
 # Netlify redirects file
-# Redireciona todas as solicitações para index.html para SPA funcionar
-/*    /index.html   200
+# Permitir acesso direto aos arquivos XML (sitemap)
+/sitemap.xml  /sitemap.xml  200
+/*.xml        /*.xml        200
+
+# Redireciona todas as outras solicitações para index.html para SPA funcionar
+/*            /index.html   200
