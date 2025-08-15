@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
-    '@nuxt/image'
+    '@nuxt/image',
+    'nuxt-simple-sitemap'
   ],
   
   // Google Analytics
@@ -53,5 +54,22 @@ export default defineNuxtConfig({
   app: {
     baseURL: process.env.BASE_URL || '/',
     buildAssetsDir: 'assets'
+  },
+  
+  // Configuração do sitemap
+  sitemap: {
+    siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://capivaradodinheiro.com.br',
+    autoLastmod: true,
+    xslTips: true,
+    includeAppSources: true,
+    include: [
+      '/blog/**',
+      '/'
+    ],
+    defaults: {
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date().toISOString()
+    }
   }
 })
