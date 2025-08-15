@@ -1,0 +1,114 @@
+export default defineNuxtConfig({
+  // Compatibility date
+  compatibilityDate: '2025-01-15',
+
+  // Configuração para SSG
+  nitro: {
+    prerender: {
+      routes: ['/sitemap.xml'],
+      crawlLinks: true
+    }
+  },
+
+  // Módulos
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxt/content',
+    '@nuxt/image',
+    'nuxt-gtag',
+    'nuxt-simple-sitemap'
+  ],
+
+  // Configuração do Content
+  content: {
+    highlight: {
+      theme: 'github-dark'
+    },
+    markdown: {
+      toc: {
+        depth: 3,
+        searchDepth: 3
+      }
+    }
+  },
+
+  // Configuração de imagens
+  image: {
+    quality: 80,
+    format: ['webp', 'jpg'],
+    densities: [1, 2],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536
+    }
+  },
+
+  // Google Analytics 4
+  gtag: {
+    id: process.env.GTAG_ID || 'GA_MEASUREMENT_ID'
+  },
+
+  // Sitemap
+  sitemap: {
+    hostname: process.env.NUXT_PUBLIC_SITE_URL || 'https://capivaradodinheiro.com',
+    gzip: true
+  },
+
+  // Configurações de SEO e meta
+  app: {
+    head: {
+      htmlAttrs: { lang: 'pt-BR' },
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      title: 'CapivaraDoDinheiro - Educação Financeira Descomplicada',
+      meta: [
+        { name: 'description', content: 'Aprenda sobre educação financeira de forma simples e prática. Dicas, estratégias e conteúdos para transformar sua relação com o dinheiro.' },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'theme-color', content: '#f97316' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'pt_BR' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:creator', content: '@capivaradodinheiro' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'canonical', href: process.env.NUXT_PUBLIC_SITE_URL || 'https://capivaradodinheiro.com' }
+      ]
+    }
+  },
+
+  // Configuração do CSS
+  css: ['~/assets/css/main.css'],
+
+  // Configurações de runtime
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://capivaradodinheiro.com',
+      gtagId: process.env.GTAG_ID || 'GA_MEASUREMENT_ID',
+      adsenseClient: process.env.ADSENSE_CLIENT || 'ca-pub-xxxxxxxxxx'
+    }
+  },
+
+  // TypeScript
+  typescript: {
+    strict: true,
+    typeCheck: true
+  },
+
+  // Configuração de build para GitHub Pages
+  ...(process.env.NODE_ENV === 'production' && process.env.GITHUB_PAGES === 'true' && {
+    app: {
+      baseURL: '/minha-carteira/',
+      buildAssetsDir: 'assets/'
+    }
+  }),
+
+  // Pré-renderização para SSG
+  experimental: {
+    payloadExtraction: false
+  }
+})

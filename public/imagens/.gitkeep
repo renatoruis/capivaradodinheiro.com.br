@@ -1,0 +1,11 @@
+# Esta pasta contém as imagens dos posts do blog
+# 
+# Estrutura recomendada:
+# - Usar nomes descritivos e slugificados
+# - Otimizar imagens para web (WebP quando possível)
+# - Tamanhos recomendados: 800x450 para imagens de destaque
+# - Incluir versões responsivas quando necessário
+#
+# Exemplos de imagens mencionadas nos posts:
+# - como-comecar-investir.jpg
+# - reserva-emergencia.jpg

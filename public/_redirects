@@ -1,0 +1,3 @@
+# Netlify redirects file
+# Redireciona todas as solicitações para index.html para SPA funcionar
+/*    /index.html   200
