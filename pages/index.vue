@@ -99,7 +99,7 @@ const showDonationModal = ref(false)
 
 // SEO básico
 useSeoMeta({
-  title: 'CapivaraDoDinheiro - Acompanhe seus investimentos',
+  title: 'CapivaraDoDinheiro',
   description: 'Acompanhe seus investimentos em um só lugar, gratuitamente e de forma simples.'
 })
 </script>
