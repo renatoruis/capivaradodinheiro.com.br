@@ -8,6 +8,18 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image'
   ],
+  
+  // Google Analytics
+  app: {
+    head: {
+      script: [
+        {
+          src: `https://www.googletagmanager.com/gtag/js?id=G-61BT9HZHZL`,
+          async: true
+        }
+      ]
+    }
+  },
 
   // Configuração do Content
   content: {
