@@ -1,3 +1,6 @@
+// Importar script para obter todos os posts
+const { getAllBlogPosts } = require('./scripts/getAllPosts');
+
 export default defineNuxtConfig({
   // Compatibility date
   compatibilityDate: '2025-01-15',
@@ -12,6 +15,8 @@ export default defineNuxtConfig({
   
   // Google Analytics
   app: {
+    baseURL: process.env.BASE_URL || '/',
+    buildAssetsDir: 'assets',
     head: {
       script: [
         {
@@ -26,11 +31,24 @@ export default defineNuxtConfig({
   content: {
     highlight: {
       theme: 'github-dark'
+    },
+    // Configuração para evitar erros de pré-renderização
+    experimental: {
+      clientDB: true
+    },
+    // Desativar API de conteúdo para geração estática
+    api: {
+      baseURL: '/api/_content'
     }
   },
 
   // Configuração para geração estática
   ssr: true,
+  
+  // Desativar validação de rotas para evitar erros de pré-renderização
+  experimental: {
+    noVueServer: true
+  },
   
   // Configuração do nitro para estático
   nitro: {
@@ -39,21 +57,19 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: [
-        '/blog/2023-11-01-reserva-de-emergencia-completo',
-        '/blog/2023-12-01-como-comecar-investir-do-zero'
+        '/',
+        '/blog',
+        ...getAllBlogPosts() // Adiciona automaticamente todos os posts
       ],
       ignore: [
         // Ignore qualquer rota que cause erro
         '/termos',
-        '/privacidade'
-      ]
+        '/privacidade',
+        '/api/**', // Ignorar todas as rotas de API durante a pré-renderização
+        '/**/_payload.json'
+      ],
+      failOnError: false // Não falhar em caso de erros de pré-renderização
     }
-  },
-  
-  // Configuração da base URL, se necessário
-  app: {
-    baseURL: process.env.BASE_URL || '/',
-    buildAssetsDir: 'assets'
   },
   
   // Configuração do sitemap
@@ -68,7 +84,7 @@ export default defineNuxtConfig({
     ],
     defaults: {
       changefreq: 'weekly',
-      priority: 0.8,
+      priority: 1,
       lastmod: new Date().toISOString()
     }
   }

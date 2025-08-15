@@ -110,9 +110,29 @@ const imageExists = (src) => {
 }
 
 // Fetch post data
-const { data: post } = await useAsyncData(`post-${slug}`, () =>
-  queryContent('blog', slug).findOne()
-)
+const { data: post } = await useAsyncData(`post-${slug}`, async () => {
+  try {
+    // Tentar buscar com o slug exato
+    const result = await queryContent('blog', slug).findOne();
+    if (result) return result;
+    
+    // Se não encontrar, tente buscar com padrão de data no início (2023-XX-XX-*)
+    const datePattern = /^\d{4}-\d{2}-\d{2}-(.+)$/;
+    const match = String(slug).match(datePattern);
+    
+    if (match) {
+      // Não encontrou o slug com data, tente sem a data
+      return await queryContent('blog').where({ 
+        _path: { $contains: match[1] }
+      }).findOne();
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Erro ao buscar post:', error);
+    return null;
+  }
+})
 
 // SEO
 useHead({
